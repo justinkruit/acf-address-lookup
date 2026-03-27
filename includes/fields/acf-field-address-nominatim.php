@@ -1,0 +1,257 @@
+<?php
+
+/**
+ * Defines the custom field type class.
+ */
+
+use AcfAddressNominatim\Utils;
+
+if (! defined('ABSPATH')) {
+	exit;
+}
+
+/**
+ * acf_field_address_nominatim class.
+ */
+class acf_field_address_nominatim extends \acf_field {
+	public $show_in_rest = true;
+	private $env;
+
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		$this->name = 'address_nominatim';
+		$this->label = __('Address', 'acf-address-nominatim');
+		$this->category = 'advanced';
+		$this->description = __('ACF field integration for Nominatim-powered address lookup.', 'acf-address-nominatim');
+		$this->defaults = array(
+			'choices'	=> array(),
+			'ui'		=> 1,
+			'multiple'	=> 0,
+			'ajax'		=> 1,
+			'placeholder' => '',
+			'allow_null' => 0,
+			'country_codes' => '',
+		);
+		$this->l10n = array(
+			'error'	=> __('Error! Please enter a higher value', 'TEXTDOMAIN'),
+		);
+
+		$this->env = array(
+			'url'     => site_url(str_replace(ABSPATH, '', __DIR__)), // URL to the acf-FIELD-NAME directory.
+			'version' => Utils::pluginVersion()
+		);
+
+
+		add_action('wp_ajax_acf/fields/' . $this->name . '/query', array($this, 'ajax_query'));
+		add_action('wp_ajax_nopriv_acf/fields/' . $this->name . '/query', array($this, 'ajax_query'));
+
+		parent::__construct();
+	}
+
+	/**
+	 * Settings to display when users configure a field of this type.
+	 *
+	 * These settings appear on the ACF “Edit Field Group” admin page when
+	 * setting up the field.
+	 *
+	 * @param array $field
+	 * @return void
+	 */
+	public function render_field_settings($field) {
+		acf_render_field_setting(
+			$field,
+			array(
+				'label'			=> __('Limit to country codes', 'acf-address-nominatim'),
+				'instructions'	=> __('Limit search results to specific country codes (comma-separated)', 'acf-address-nominatim'),
+				'type'			=> 'text',
+				'name'			=> 'country_codes',
+			)
+		);
+	}
+
+	/**
+	 * HTML content to show when a publisher edits the field on the edit screen.
+	 *
+	 * @param array $field The field settings and values.
+	 * @return void
+	 */
+	public function render_field($field) {
+		$value   = acf_get_array($field['value']);
+		$choices = acf_get_array($field['choices']);
+
+		if ($field['ui'] && $field['ajax']) {
+			$minimal = array();
+			if (! empty($value)) {
+				foreach ($value as $val) {
+					$val_decoded = json_decode($val, true);
+					$minimal[$val] = $val_decoded['display_name'] ?: $val;
+				}
+			}
+			$choices = $minimal;
+		}
+
+		if (empty($field['placeholder'])) {
+			$field['placeholder'] = _x('Select', 'verb', 'acf');
+		}
+
+		$select = array(
+			'id'               => $field['id'],
+			'class'            => $field['class'],
+			'name'             => $field['name'],
+			'data-ui'          => $field['ui'],
+			'data-ajax'        => $field['ajax'],
+			'data-multiple'    => $field['multiple'],
+			'data-placeholder' => $field['placeholder'],
+			'data-allow_null'  => $field['allow_null'],
+		);
+
+		if (! empty($field['nonce'])) {
+			$select['data-nonce'] = $field['nonce'];
+		}
+
+		if ($field['ajax'] && empty($field['nonce']) && acf_is_field_key($field['key'])) {
+			$select['data-nonce'] = wp_create_nonce('acf_field_' . $this->name . '_' . $field['key']);
+		}
+
+		if ($field['multiple'] || $field['ui']) {
+			acf_hidden_input(
+				array(
+					'id'   => $field['id'] . '-input',
+					'name' => $field['name'],
+				)
+			);
+		}
+
+		$select['value']   = $value;
+		$select['choices'] = $choices;
+
+		acf_select_input($select);
+	}
+
+	public function ajax_query() {
+		$nonce = acf_request_arg('nonce', '');
+		$key   = acf_request_arg('field_key', '');
+
+		$is_field_key = acf_is_field_key($key);
+
+		// Back-compat for field settings.
+		if (! $is_field_key) {
+			if (! acf_current_user_can_admin()) {
+				die();
+			}
+
+			$nonce = '';
+			$key   = '';
+		}
+
+		if (! acf_verify_ajax($nonce, $key, $is_field_key)) {
+			die();
+		}
+
+		acf_send_ajax_results($this->get_ajax_query($_POST));
+	}
+
+	private function get_ajax_query($options) {
+		$options = acf_parse_args(
+			$options,
+			array(
+				'post_id'   => 0,
+				's'         => '',
+				'field_key' => '',
+				'paged'     => 1,
+			)
+		);
+
+		// load field.
+		$field = acf_get_field($options['field_key']);
+		if (! $field) {
+			return false;
+		}
+
+
+		// make a call to the Nominatim API with the search term and return results
+		$results = array();
+		if (! empty($options['s'])) {
+			$url_vars = [
+				'q' => $options['s'],
+				'format' => 'json',
+				'addressdetails' => 1,
+			];
+			if (! empty($field['country_codes'])) {
+				$url_vars['countrycodes'] = $field['country_codes'];
+			}
+			$response = wp_remote_get('https://nominatim.openstreetmap.org/search?' . http_build_query($url_vars));
+			if (is_array($response) && ! is_wp_error($response)) {
+				$body = wp_remote_retrieve_body($response);
+				$data = json_decode($body, true);
+				if (is_array($data)) {
+					foreach ($data as $item) {
+						$item_formatted = [
+							'display_name' => $item['display_name'],
+							'lat' => $item['lat'],
+							'lon' => $item['lon'],
+							'address' => $item['address'] ?? [],
+						];
+						$results[] = array(
+							'id' => json_encode($item_formatted),
+							'text' => $item['display_name'],
+							'data' => $item_formatted,
+						);
+					}
+				}
+			}
+		}
+
+		$response = array(
+			'results' => $results,
+		);
+
+		return $response;
+	}
+
+	public function input_admin_enqueue_scripts() {
+		$url     = trailingslashit($this->env['url']);
+		$version = $this->env['version'];
+
+
+		wp_enqueue_script(
+			'acf-input-address-nominatim',
+			Utils::pluginUrl() . 'includes/fields/js.js',
+			array('acf-input'),
+			$version
+		);
+
+		// Bail early if not enqueuing select2.
+		if (! acf_get_setting('enqueue_select2')) {
+			return;
+		}
+
+		global $wp_scripts;
+
+		$min   = defined('ACF_DEVELOPMENT_MODE') && ACF_DEVELOPMENT_MODE ? '' : '.min';
+		$major = acf_get_setting('select2_version');
+
+		// attempt to find 3rd party Select2 version
+		// - avoid including v3 CSS when v4 JS is already enqueued.
+		if (isset($wp_scripts->registered['select2'])) {
+			$major = (int) $wp_scripts->registered['select2']->ver;
+		}
+
+		if ($major === 3) {
+			// Use v3 if necessary.
+			$version = '3.5.2';
+			$script  = acf_get_url("assets/inc/select2/3/select2{$min}.js");
+			$style   = acf_get_url('assets/inc/select2/3/select2.css');
+		} else {
+			// Default to v4.
+			$version = '4.0.13';
+			$script  = acf_get_url("assets/inc/select2/4/select2.full{$min}.js");
+			$style   = acf_get_url("assets/inc/select2/4/select2{$min}.css");
+		}
+
+		wp_enqueue_script('select2', $script, array('jquery'), $version);
+		wp_enqueue_style('select2', $style, '', $version);
+	}
+}
