@@ -1,9 +1,9 @@
 <?php
 
 /**
- * ACF Address Nominatim
+ * ACF Address Field
  *
- * Plugin Name:       ACF Address Nominatim
+ * Plugin Name:       ACF Address Field
  * Plugin URI:        https://justinkruit.com
  * Description:       ACF field integration for Nominatim-powered address lookup.
  * Version:           0.0.1-beta1
