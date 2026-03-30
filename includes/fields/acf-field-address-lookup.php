@@ -172,36 +172,9 @@ class acf_field_address_lookup extends \acf_field {
 
 
 		// make a call to the Nominatim API with the search term and return results
-		$results = array();
-		if (! empty($options['s'])) {
-			$url_vars = [
-				'q' => $options['s'],
-				'format' => 'json',
-				'addressdetails' => 1,
-			];
-			if (! empty($field['country_codes'])) {
-				$url_vars['countrycodes'] = $field['country_codes'];
-			}
-			$response = wp_remote_get('https://nominatim.openstreetmap.org/search?' . http_build_query($url_vars));
-			if (is_array($response) && ! is_wp_error($response)) {
-				$body = wp_remote_retrieve_body($response);
-				$data = json_decode($body, true);
-				if (is_array($data)) {
-					foreach ($data as $item) {
-						$item_formatted = [
-							'display_name' => $item['display_name'],
-							'lat' => $item['lat'],
-							'lon' => $item['lon'],
-							'address' => $item['address'] ?? [],
-						];
-						$results[] = array(
-							'id' => json_encode($item_formatted),
-							'text' => $item['display_name'],
-							'data' => $item_formatted,
-						);
-					}
-				}
-			}
+		$results = $this->call_nominatim_api($options['s'], $field);
+		if ($results === false) {
+			return false;
 		}
 
 		$response = array(
@@ -209,6 +182,49 @@ class acf_field_address_lookup extends \acf_field {
 		);
 
 		return $response;
+	}
+
+	private function call_nominatim_api($query, $field) {
+		$url_vars = [
+			'q' => $query,
+			'format' => 'json',
+			'addressdetails' => 1,
+		];
+		if (! empty($field['country_codes'])) {
+			$url_vars['countrycodes'] = $field['country_codes'];
+		}
+		$response = wp_remote_get('https://nominatim.openstreetmap.org/search?' . http_build_query($url_vars));
+		if (!is_array($response) || is_wp_error($response)) {
+			return false;
+		}
+
+		$body = wp_remote_retrieve_body($response);
+		$data = json_decode($body, true);
+		if (!is_array($data)) {
+			return false;
+		}
+
+		$results = [];
+		foreach ($data as $item) {
+			$item_formatted = [
+				'display_name' => $item['display_name'],
+				'coordinates' => [
+					'lat' => $item['lat'],
+					'lon' => $item['lon'],
+				],
+				'house_number' => $item['address']['house_number'] ?? '',
+				'road' => $item['address']['road'] ?? '',
+				'city' => $item['address']['city'] ?? $item['address']['town'] ?? $item['address']['village'] ?? '',
+				'state' => $item['address']['state'] ?? '',
+				'postcode' => $item['address']['postcode'] ?? '',
+				'country' => $item['address']['country'] ?? '',
+			];
+			$results[] = array(
+				'id' => json_encode($item_formatted),
+				'text' => $item['display_name'],
+			);
+		}
+		return $results;
 	}
 
 	public function input_admin_enqueue_scripts() {
