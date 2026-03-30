@@ -22,12 +22,14 @@ class NominatimProvider extends AbstractProvider {
     if (! empty($field['country_codes'])) {
       $url_vars['countrycodes'] = $field['country_codes'];
     }
-    
+
     if (! empty($field['language'])) {
       $url_vars['accept-language'] = $field['language'];
     }
 
-    $response = wp_remote_get('https://nominatim.openstreetmap.org/search?' . http_build_query($url_vars));
+    $base_url = apply_filters('acf_address_lookup/nominatim_url', 'https://nominatim.openstreetmap.org/search');
+
+    $response = wp_remote_get($base_url . '?' . http_build_query($url_vars));
 
     if (! is_array($response) || is_wp_error($response)) {
       return false;
