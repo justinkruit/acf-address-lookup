@@ -32,10 +32,8 @@ class acf_field_address_lookup extends \acf_field {
 			'ajax'		=> 1,
 			'placeholder' => '',
 			'allow_null' => 0,
+			'provider' => 'nominatim',
 			'country_codes' => '',
-		);
-		$this->l10n = array(
-			'error'	=> __('Error! Please enter a higher value', 'TEXTDOMAIN'),
 		);
 
 		$this->env = array(
@@ -60,6 +58,18 @@ class acf_field_address_lookup extends \acf_field {
 	 * @return void
 	 */
 	public function render_field_settings($field) {
+		// Disabled for now: want to add more providers before exposing this option.
+		// acf_render_field_setting(
+		// 	$field,
+		// 	array(
+		// 		'label'			=> __('Lookup Provider', 'acf-address-lookup'),
+		// 		'instructions'	=> __('Select the address lookup API to use.', 'acf-address-lookup'),
+		// 		'type'			=> 'select',
+		// 		'name'			=> 'provider',
+		// 		'choices'		=> acf_address_lookup()->providers()->all(),
+		// 	)
+		// );
+
 		acf_render_field_setting(
 			$field,
 			array(
@@ -67,6 +77,11 @@ class acf_field_address_lookup extends \acf_field {
 				'instructions'	=> __('Limit search results to specific country codes (comma-separated)', 'acf-address-lookup'),
 				'type'			=> 'text',
 				'name'			=> 'country_codes',
+				'conditions'   => array(
+					'field'    => 'provider',
+					'operator' => '==',
+					'value'    => 'nominatim',
+				),
 			)
 		);
 	}
@@ -171,8 +186,8 @@ class acf_field_address_lookup extends \acf_field {
 		}
 
 
-		// make a call to the Nominatim API with the search term and return results
-		$results = $this->call_nominatim_api($options['s'], $field);
+		$provider = acf_address_lookup()->providers()->get($field['provider'] ?? 'nominatim');
+		$results  = $provider->search($options['s'], $field);
 		if ($results === false) {
 			return false;
 		}
@@ -182,49 +197,6 @@ class acf_field_address_lookup extends \acf_field {
 		);
 
 		return $response;
-	}
-
-	private function call_nominatim_api($query, $field) {
-		$url_vars = [
-			'q' => $query,
-			'format' => 'json',
-			'addressdetails' => 1,
-		];
-		if (! empty($field['country_codes'])) {
-			$url_vars['countrycodes'] = $field['country_codes'];
-		}
-		$response = wp_remote_get('https://nominatim.openstreetmap.org/search?' . http_build_query($url_vars));
-		if (!is_array($response) || is_wp_error($response)) {
-			return false;
-		}
-
-		$body = wp_remote_retrieve_body($response);
-		$data = json_decode($body, true);
-		if (!is_array($data)) {
-			return false;
-		}
-
-		$results = [];
-		foreach ($data as $item) {
-			$item_formatted = [
-				'display_name' => $item['display_name'],
-				'coordinates' => [
-					'lat' => $item['lat'],
-					'lon' => $item['lon'],
-				],
-				'house_number' => $item['address']['house_number'] ?? '',
-				'road' => $item['address']['road'] ?? '',
-				'city' => $item['address']['city'] ?? $item['address']['town'] ?? $item['address']['village'] ?? '',
-				'state' => $item['address']['state'] ?? '',
-				'postcode' => $item['address']['postcode'] ?? '',
-				'country' => $item['address']['country'] ?? '',
-			];
-			$results[] = array(
-				'id' => json_encode($item_formatted),
-				'text' => $item['display_name'],
-			);
-		}
-		return $results;
 	}
 
 	public function input_admin_enqueue_scripts() {

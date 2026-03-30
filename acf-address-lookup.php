@@ -21,6 +21,9 @@ if (!defined('WPINC')) {
 }
 
 
+use AcfAddressLookup\Providers\ProviderRegistry;
+use AcfAddressLookup\Providers\NominatimProvider;
+
 class Acf_Address_Lookup {
 
   public string $plugin_name = 'acf-address-lookup';
@@ -28,6 +31,7 @@ class Acf_Address_Lookup {
   public string $prefix = 'acf_address_lookup'; // Being used for options and enqueues
   public string $plugin_path;
   protected array $instances = [];
+  private ProviderRegistry $providerRegistry;
 
   /**
    * Construction of the plugin
@@ -43,6 +47,11 @@ class Acf_Address_Lookup {
     $this->define('ACF_ADDRESS_LOOKUP_PLUGIN_URL', plugin_dir_url(__FILE__));
 
     spl_autoload_register(array($this, 'autoloader'));
+
+    $this->providerRegistry = new ProviderRegistry();
+    $this->providerRegistry->register(new NominatimProvider());
+
+    do_action('acf_address_lookup/register_providers', $this->providerRegistry);
 
     add_action('init', [$this, 'loadField']);
   }
@@ -94,6 +103,10 @@ class Acf_Address_Lookup {
     if (!defined($name)) {
       define($name, $value);
     }
+  }
+
+  public function providers(): ProviderRegistry {
+    return $this->providerRegistry;
   }
 }
 
