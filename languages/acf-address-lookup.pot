@@ -1,0 +1,63 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ACF Address Lookup\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-30 16:58+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.8.3; wp-6.9.4; php-8.2.23\n"
+"X-Domain: acf-address-lookup"
+
+#. Name of the plugin
+msgid "ACF Address Lookup"
+msgstr ""
+
+#. Description of the plugin
+#: includes/fields/acf-field-address-lookup.php:27
+msgid "ACF field integration for address lookup providers."
+msgstr ""
+
+#: includes/fields/acf-field-address-lookup.php:25
+msgid "Address"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://github.com/justinkruit/acf-address-lookup"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://justinkruit.com"
+msgstr ""
+
+#. Author of the plugin
+msgid "Justin Kruit"
+msgstr ""
+
+#: includes/fields/acf-field-address-lookup.php:92
+msgid "Language"
+msgstr ""
+
+#: includes/fields/acf-field-address-lookup.php:78
+msgid "Limit search results to specific country codes (comma-separated)"
+msgstr ""
+
+#: includes/fields/acf-field-address-lookup.php:77
+msgid "Limit to country codes"
+msgstr ""
+
+#: includes/fields/acf-field-address-lookup.php:127
+msgctxt "placeholder text"
+msgid "Search for an address..."
+msgstr ""
+
+#: includes/fields/acf-field-address-lookup.php:93
+msgid "Set the language for the address lookup results."
+msgstr ""

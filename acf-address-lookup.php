@@ -4,9 +4,9 @@
  * ACF Address Lookup
  *
  * Plugin Name:       ACF Address Lookup
- * Plugin URI:        https://justinkruit.com
+ * Plugin URI:        https://github.com/justinkruit/acf-address-lookup
  * Description:       ACF field integration for address lookup providers.
- * Version:           0.0.1-beta1
+ * Version:           1.0.0
  * Author:            Justin Kruit
  * Author URI:        https://justinkruit.com
  * License:           GPLv2 or later
