@@ -4,16 +4,16 @@
  * Defines the custom field type class.
  */
 
-use AcfAddressNominatim\Utils;
+use AcfAddressLookup\Utils;
 
 if (! defined('ABSPATH')) {
 	exit;
 }
 
 /**
- * acf_field_address_nominatim class.
+ * acf_field_address_lookup class.
  */
-class acf_field_address_nominatim extends \acf_field {
+class acf_field_address_lookup extends \acf_field {
 	public $show_in_rest = true;
 	private $env;
 
@@ -21,10 +21,10 @@ class acf_field_address_nominatim extends \acf_field {
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->name = 'address_nominatim';
-		$this->label = __('Address', 'acf-address-nominatim');
+		$this->name = 'address_lookup';
+		$this->label = __('Address', 'acf-address-lookup');
 		$this->category = 'advanced';
-		$this->description = __('ACF field integration for Nominatim-powered address lookup.', 'acf-address-nominatim');
+		$this->description = __('ACF field integration for address lookup providers.', 'acf-address-lookup');
 		$this->defaults = array(
 			'choices'	=> array(),
 			'ui'		=> 1,
@@ -63,8 +63,8 @@ class acf_field_address_nominatim extends \acf_field {
 		acf_render_field_setting(
 			$field,
 			array(
-				'label'			=> __('Limit to country codes', 'acf-address-nominatim'),
-				'instructions'	=> __('Limit search results to specific country codes (comma-separated)', 'acf-address-nominatim'),
+				'label'			=> __('Limit to country codes', 'acf-address-lookup'),
+				'instructions'	=> __('Limit search results to specific country codes (comma-separated)', 'acf-address-lookup'),
 				'type'			=> 'text',
 				'name'			=> 'country_codes',
 			)
@@ -217,8 +217,8 @@ class acf_field_address_nominatim extends \acf_field {
 
 
 		wp_enqueue_script(
-			'acf-input-address-nominatim',
-			Utils::pluginUrl() . 'includes/fields/js.js',
+			'acf-input-address-lookup',
+			Utils::pluginUrl() . 'includes/fields/field.js',
 			array('acf-input'),
 			$version
 		);

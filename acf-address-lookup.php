@@ -1,17 +1,17 @@
 <?php
 
 /**
- * ACF Address Field
+ * ACF Address Lookup
  *
- * Plugin Name:       ACF Address Field
+ * Plugin Name:       ACF Address Lookup
  * Plugin URI:        https://justinkruit.com
- * Description:       ACF field integration for Nominatim-powered address lookup.
+ * Description:       ACF field integration for address lookup providers.
  * Version:           0.0.1-beta1
  * Author:            Justin Kruit
  * Author URI:        https://justinkruit.com
  * License:           GPLv2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
- * Text Domain:       acf-address-nominatim
+ * Text Domain:       acf-address-lookup
  * Domain Path:       /languages
  */
 
@@ -21,11 +21,11 @@ if (!defined('WPINC')) {
 }
 
 
-class Acf_Address_Nominatim {
+class Acf_Address_Lookup {
 
-  public string $plugin_name = 'acf-address-nominatim';
+  public string $plugin_name = 'acf-address-lookup';
   public string $version = '0.0.1-beta1';
-  public string $prefix = 'acf_address_nominatim'; // Being used for options and enqueues
+  public string $prefix = 'acf_address_lookup'; // Being used for options and enqueues
   public string $plugin_path;
   protected array $instances = [];
 
@@ -38,9 +38,9 @@ class Acf_Address_Nominatim {
 
   public function initialize() {
     $this->plugin_path = plugin_dir_path(__FILE__);
-    $this->define('ACF_ADDRESS_NOMINATIM_VERSION', $this->version);
-    $this->define('ACF_ADDRESS_NOMINATIM_PLUGIN_DIR', $this->plugin_path);
-    $this->define('ACF_ADDRESS_NOMINATIM_PLUGIN_URL', plugin_dir_url(__FILE__));
+    $this->define('ACF_ADDRESS_LOOKUP_VERSION', $this->version);
+    $this->define('ACF_ADDRESS_LOOKUP_PLUGIN_DIR', $this->plugin_path);
+    $this->define('ACF_ADDRESS_LOOKUP_PLUGIN_URL', plugin_dir_url(__FILE__));
 
     spl_autoload_register(array($this, 'autoloader'));
 
@@ -52,13 +52,13 @@ class Acf_Address_Nominatim {
       return;
     }
 
-    require_once plugin_dir_path(__FILE__) . 'includes/fields/acf-field-address-nominatim.php';
-    acf_register_field_type('acf_field_address_nominatim');
+    require_once plugin_dir_path(__FILE__) . 'includes/fields/acf-field-address-lookup.php';
+    acf_register_field_type('acf_field_address_lookup');
   }
 
   public function autoloader($class) {
     $class = str_replace("\\", DIRECTORY_SEPARATOR, $class);
-    $class = str_replace("AcfAddressNominatim", "includes", $class);
+    $class = str_replace("AcfAddressLookup", "includes", $class);
     $file  = $this->plugin_path . $class . '.php';
 
     if (file_exists($file)) {
@@ -97,22 +97,22 @@ class Acf_Address_Nominatim {
   }
 }
 
-function run_acf_address_nominatim() {
-  global $acf_address_nominatim;
-  $acf_address_nominatim = new Acf_Address_Nominatim();
-  $acf_address_nominatim->initialize();
+function run_acf_address_lookup() {
+  global $acf_address_lookup;
+  $acf_address_lookup = new Acf_Address_Lookup();
+  $acf_address_lookup->initialize();
 
-  return $acf_address_nominatim;
+  return $acf_address_lookup;
 }
 
-run_acf_address_nominatim();
-//add_action('init', 'run_acf_address_nominatim');
+run_acf_address_lookup();
+//add_action('init', 'run_acf_address_lookup');
 
 /**
- * @return Acf_Address_Nominatim
+ * @return Acf_Address_Lookup
  */
-function acf_address_nominatim() {
-  global $acf_address_nominatim;
+function acf_address_lookup() {
+  global $acf_address_lookup;
 
-  return $acf_address_nominatim;
+  return $acf_address_lookup;
 }

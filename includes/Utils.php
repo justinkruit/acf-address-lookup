@@ -1,6 +1,6 @@
 <?php
 
-namespace AcfAddressNominatim;
+namespace AcfAddressLookup;
 
 class Utils {
   /**
@@ -9,7 +9,7 @@ class Utils {
    * @return string The directory of the plugin.
    */
   public static function pluginDir() {
-    return ACF_ADDRESS_NOMINATIM_PLUGIN_DIR;
+    return ACF_ADDRESS_LOOKUP_PLUGIN_DIR;
   }
 
   /**
@@ -18,7 +18,7 @@ class Utils {
    * @return string The URL of the plugin.
    */
   public static function pluginUrl() {
-    return ACF_ADDRESS_NOMINATIM_PLUGIN_URL;
+    return ACF_ADDRESS_LOOKUP_PLUGIN_URL;
   }
 
   /**
@@ -27,6 +27,6 @@ class Utils {
    * @return string The version of the plugin.
    */
   public static function pluginVersion() {
-    return ACF_ADDRESS_NOMINATIM_VERSION;
+    return ACF_ADDRESS_LOOKUP_VERSION;
   }
 }
