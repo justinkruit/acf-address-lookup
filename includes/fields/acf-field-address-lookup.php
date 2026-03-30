@@ -215,6 +215,15 @@ class acf_field_address_lookup extends \acf_field {
 		return $response;
 	}
 
+	public function format_value($value, $post_id, $field) {
+		// Decode JSON string to array for easier use in templates.
+		if (is_string($value)) {
+			$value = json_decode($value, true);
+		}
+
+		return $value;
+	}
+
 	public function input_admin_enqueue_scripts() {
 		$url     = trailingslashit($this->env['url']);
 		$version = $this->env['version'];
