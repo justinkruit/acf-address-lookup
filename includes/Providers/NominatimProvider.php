@@ -22,6 +22,10 @@ class NominatimProvider extends AbstractProvider {
     if (! empty($field['country_codes'])) {
       $url_vars['countrycodes'] = $field['country_codes'];
     }
+    
+    if (! empty($field['language'])) {
+      $url_vars['accept-language'] = $field['language'];
+    }
 
     $response = wp_remote_get('https://nominatim.openstreetmap.org/search?' . http_build_query($url_vars));
 

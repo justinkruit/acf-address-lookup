@@ -34,6 +34,7 @@ class acf_field_address_lookup extends \acf_field {
 			'allow_null' => 0,
 			'provider' => 'nominatim',
 			'country_codes' => '',
+			'language' => '',
 		);
 
 		$this->env = array(
@@ -77,6 +78,21 @@ class acf_field_address_lookup extends \acf_field {
 				'instructions'	=> __('Limit search results to specific country codes (comma-separated)', 'acf-address-lookup'),
 				'type'			=> 'text',
 				'name'			=> 'country_codes',
+				'conditions'   => array(
+					'field'    => 'provider',
+					'operator' => '==',
+					'value'    => 'nominatim',
+				),
+			)
+		);
+
+		acf_render_field_setting(
+			$field,
+			array(
+				'label'			=> __('Language', 'acf-address-lookup'),
+				'instructions'	=> __('Set the language for the address lookup results.', 'acf-address-lookup'),
+				'type'			=> 'text',
+				'name'			=> 'language',
 				'conditions'   => array(
 					'field'    => 'provider',
 					'operator' => '==',
