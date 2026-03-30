@@ -124,7 +124,7 @@ class acf_field_address_lookup extends \acf_field {
 		}
 
 		if (empty($field['placeholder'])) {
-			$field['placeholder'] = _x('Select', 'verb', 'acf');
+			$field['placeholder'] = _x('Search for an address...', 'placeholder text', 'acf-address-lookup');
 		}
 
 		$select = array(
