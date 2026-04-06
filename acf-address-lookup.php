@@ -54,6 +54,7 @@ class Acf_Address_Lookup {
     do_action('acf_address_lookup/register_providers', $this->providerRegistry);
 
     add_action('init', [$this, 'loadField']);
+    add_action('init', [$this, 'registerAcfVariations']);
   }
 
   public function loadField() {
@@ -107,6 +108,11 @@ class Acf_Address_Lookup {
 
   public function providers(): ProviderRegistry {
     return $this->providerRegistry;
+  }
+
+  public function registerAcfVariations() {
+    acf_add_filter_variations('acf_address_lookup/nominatim_url', array( 'type', 'name', 'key' ), 1);
+    acf_add_filter_variations('acf_address_lookup/nominatim_url_vars', array( 'type', 'name', 'key' ), 1);
   }
 }
 
