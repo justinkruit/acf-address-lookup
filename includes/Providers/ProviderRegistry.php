@@ -1,11 +1,11 @@
 <?php
 
-namespace AcfAddressLookup\Providers;
+namespace justinkruit\AddressLookupForAcf\Providers;
 
 class ProviderRegistry {
 
   /** @var AbstractProvider[] */
-  private array $providers = [];
+  private $providers = [];
 
   public function register(AbstractProvider $provider): void {
     $this->providers[$provider->name()] = $provider;

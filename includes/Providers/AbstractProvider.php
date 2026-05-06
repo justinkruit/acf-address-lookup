@@ -1,6 +1,6 @@
 <?php
 
-namespace AcfAddressLookup\Providers;
+namespace justinkruit\AddressLookupForAcf\Providers;
 
 abstract class AbstractProvider {
 
@@ -29,7 +29,7 @@ abstract class AbstractProvider {
    * @param array  $field The ACF field settings.
    * @return array|false Array of normalized address arrays, or false on failure.
    */
-  abstract public function search(string $query, array $field): array|false;
+  abstract public function search(string $query, array $field);
 
   /**
    * Wrap a normalized address array into the format expected by ACF select results.

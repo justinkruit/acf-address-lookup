@@ -1,7 +1,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ACF Address Lookup\n"
+"Project-Id-Version: Address Lookup field for ACF\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-30 16:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -14,10 +14,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.8.3; wp-6.9.4; php-8.2.23\n"
-"X-Domain: acf-address-lookup"
+"X-Domain: address-lookup-for-acf"
 
 #. Name of the plugin
-msgid "ACF Address Lookup"
+msgid "Address Lookup field for ACF"
 msgstr ""
 
 #. Description of the plugin

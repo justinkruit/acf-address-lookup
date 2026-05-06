@@ -1,6 +1,6 @@
 <?php
 
-namespace AcfAddressLookup\Providers;
+namespace justinkruit\AddressLookupForAcf\Providers;
 
 class NominatimProvider extends AbstractProvider {
 
@@ -12,7 +12,7 @@ class NominatimProvider extends AbstractProvider {
     return 'Nominatim (OpenStreetMap)';
   }
 
-  public function search(string $query, array $field): array|false {
+  public function search(string $query, array $field) {
     $url_vars = [
       'q'              => $query,
       'format'         => 'json',
@@ -27,8 +27,8 @@ class NominatimProvider extends AbstractProvider {
       $url_vars['accept-language'] = $field['language'];
     }
 
-    $base_url = apply_filters('acf_address_lookup/nominatim_url', 'https://nominatim.openstreetmap.org/search', $field);
-    $url_vars = apply_filters('acf_address_lookup/nominatim_url_vars', $url_vars, $field);
+    $base_url = apply_filters('address_lookup_for_acf/nominatim_url', 'https://nominatim.openstreetmap.org/search', $field);
+    $url_vars = apply_filters('address_lookup_for_acf/nominatim_url_vars', $url_vars, $field);
 
     $response = wp_remote_get($base_url . '?' . http_build_query($url_vars));
 

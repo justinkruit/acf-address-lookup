@@ -4,7 +4,7 @@
  * Defines the custom field type class.
  */
 
-use AcfAddressLookup\Utils;
+use justinkruit\AddressLookupForAcf\Utils;
 
 if (! defined('ABSPATH')) {
 	exit;
@@ -22,9 +22,9 @@ class acf_field_address_lookup extends \acf_field {
 	 */
 	public function __construct() {
 		$this->name = 'address_lookup';
-		$this->label = __('Address', 'acf-address-lookup');
+		$this->label = __('Address', 'address-lookup-for-acf');
 		$this->category = 'advanced';
-		$this->description = __('ACF field integration for address lookup providers.', 'acf-address-lookup');
+		$this->description = __('ACF field integration for address lookup providers.', 'address-lookup-for-acf');
 		$this->defaults = array(
 			'choices'	=> array(),
 			'ui'		=> 1,
@@ -63,19 +63,19 @@ class acf_field_address_lookup extends \acf_field {
 		// acf_render_field_setting(
 		// 	$field,
 		// 	array(
-		// 		'label'			=> __('Lookup Provider', 'acf-address-lookup'),
-		// 		'instructions'	=> __('Select the address lookup API to use.', 'acf-address-lookup'),
+		// 		'label'			=> __('Lookup Provider', 'address-lookup-for-acf'),
+		// 		'instructions'	=> __('Select the address lookup API to use.', 'address-lookup-for-acf'),
 		// 		'type'			=> 'select',
 		// 		'name'			=> 'provider',
-		// 		'choices'		=> acf_address_lookup()->providers()->all(),
+		// 		'choices'		=> address_lookup_for_acf()->providers()->all(),
 		// 	)
 		// );
 
 		acf_render_field_setting(
 			$field,
 			array(
-				'label'			=> __('Limit to country codes', 'acf-address-lookup'),
-				'instructions'	=> __('Limit search results to specific country codes (comma-separated)', 'acf-address-lookup'),
+				'label'			=> __('Limit to country codes', 'address-lookup-for-acf'),
+				'instructions'	=> __('Limit search results to specific country codes (comma-separated)', 'address-lookup-for-acf'),
 				'type'			=> 'text',
 				'name'			=> 'country_codes',
 				'conditions'   => array(
@@ -89,8 +89,8 @@ class acf_field_address_lookup extends \acf_field {
 		acf_render_field_setting(
 			$field,
 			array(
-				'label'			=> __('Language', 'acf-address-lookup'),
-				'instructions'	=> __('Set the language for the address lookup results.', 'acf-address-lookup'),
+				'label'			=> __('Language', 'address-lookup-for-acf'),
+				'instructions'	=> __('Set the language for the address lookup results.', 'address-lookup-for-acf'),
 				'type'			=> 'text',
 				'name'			=> 'language',
 				'conditions'   => array(
@@ -124,7 +124,7 @@ class acf_field_address_lookup extends \acf_field {
 		}
 
 		if (empty($field['placeholder'])) {
-			$field['placeholder'] = _x('Search for an address...', 'placeholder text', 'acf-address-lookup');
+			$field['placeholder'] = _x('Search for an address...', 'placeholder text', 'address-lookup-for-acf');
 		}
 
 		$select = array(
@@ -202,7 +202,7 @@ class acf_field_address_lookup extends \acf_field {
 		}
 
 
-		$provider = acf_address_lookup()->providers()->get($field['provider'] ?? 'nominatim');
+		$provider = address_lookup_for_acf()->providers()->get($field['provider'] ?? 'nominatim');
 		$results  = $provider->search($options['s'], $field);
 		if ($results === false) {
 			return false;
