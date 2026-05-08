@@ -91,6 +91,26 @@ Yes. Use the `address_lookup_for_acf/nominatim_url` filter to point to your own 
 
 PHP 7.2 or higher is required.
 
+== External services ==
+
+This plugin connects to third-party external services to perform address lookups. No data is sent automatically; requests are only made when an admin user actively searches for an address in the ACF field editor. The search query text is sent to the configured provider's API.
+
+Below is a list of each provider, what additional data is sent, how to override the API URL, and links to their terms and privacy policies.
+
+= Nominatim (OpenStreetMap) =
+
+Service: [Nominatim](https://nominatim.openstreetmap.org/) by the OpenStreetMap Foundation: used for geocoding address searches.
+
+Additional data sent: configured country code(s) and language preference (if set in the field settings).
+
+Override URL: use the `address_lookup_for_acf/nominatim_url` filter to point to a self-hosted instance.
+
+Policies:
+
+* [Nominatim Usage Policy](https://operations.osmfoundation.org/policies/nominatim/)
+* [OpenStreetMap Foundation Terms of Use](https://osmfoundation.org/wiki/Terms_of_Use)
+* [OpenStreetMap Foundation Privacy Policy](https://osmfoundation.org/wiki/Privacy_Policy)
+
 == Changelog ==
 
 = 1.0.0 =
