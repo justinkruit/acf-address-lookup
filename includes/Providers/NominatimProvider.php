@@ -9,7 +9,7 @@ class NominatimProvider extends AbstractProvider {
   }
 
   public function label(): string {
-    return 'Nominatim (OpenStreetMap)';
+    return __('Nominatim (OpenStreetMap)', 'jk-address-lookup-for-acf');
   }
 
   public function search(string $query, array $field) {

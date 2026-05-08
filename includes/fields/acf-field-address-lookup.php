@@ -22,9 +22,9 @@ class acf_field_address_lookup extends \acf_field {
 	 */
 	public function __construct() {
 		$this->name = 'address_lookup';
-		$this->label = __('Address', 'address-lookup-for-acf');
+		$this->label = __('Address', 'jk-address-lookup-for-acf');
 		$this->category = 'advanced';
-		$this->description = __('ACF field integration for address lookup providers.', 'address-lookup-for-acf');
+		$this->description = __('ACF field integration for address lookup providers.', 'jk-address-lookup-for-acf');
 		$this->defaults = array(
 			'choices'	=> array(),
 			'ui'		=> 1,
@@ -63,8 +63,8 @@ class acf_field_address_lookup extends \acf_field {
 		// acf_render_field_setting(
 		// 	$field,
 		// 	array(
-		// 		'label'			=> __('Lookup Provider', 'address-lookup-for-acf'),
-		// 		'instructions'	=> __('Select the address lookup API to use.', 'address-lookup-for-acf'),
+		// 		'label'			=> __('Lookup Provider', 'jk-address-lookup-for-acf'),
+		// 		'instructions'	=> __('Select the address lookup API to use.', 'jk-address-lookup-for-acf'),
 		// 		'type'			=> 'select',
 		// 		'name'			=> 'provider',
 		// 		'choices'		=> address_lookup_for_acf()->providers()->all(),
@@ -74,8 +74,8 @@ class acf_field_address_lookup extends \acf_field {
 		acf_render_field_setting(
 			$field,
 			array(
-				'label'			=> __('Limit to country codes', 'address-lookup-for-acf'),
-				'instructions'	=> __('Limit search results to specific country codes (comma-separated)', 'address-lookup-for-acf'),
+				'label'			=> __('Limit to country codes', 'jk-address-lookup-for-acf'),
+				'instructions'	=> __('Limit search results to specific country codes (comma-separated)', 'jk-address-lookup-for-acf'),
 				'type'			=> 'text',
 				'name'			=> 'country_codes',
 				'conditions'   => array(
@@ -89,8 +89,8 @@ class acf_field_address_lookup extends \acf_field {
 		acf_render_field_setting(
 			$field,
 			array(
-				'label'			=> __('Language', 'address-lookup-for-acf'),
-				'instructions'	=> __('Set the language for the address lookup results.', 'address-lookup-for-acf'),
+				'label'			=> __('Language', 'jk-address-lookup-for-acf'),
+				'instructions'	=> __('Set the language for the address lookup results.', 'jk-address-lookup-for-acf'),
 				'type'			=> 'text',
 				'name'			=> 'language',
 				'conditions'   => array(
@@ -124,7 +124,7 @@ class acf_field_address_lookup extends \acf_field {
 		}
 
 		if (empty($field['placeholder'])) {
-			$field['placeholder'] = _x('Search for an address...', 'placeholder text', 'address-lookup-for-acf');
+			$field['placeholder'] = _x('Search for an address...', 'placeholder text', 'jk-address-lookup-for-acf');
 		}
 
 		$select = array(

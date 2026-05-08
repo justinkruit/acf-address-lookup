@@ -1,4 +1,4 @@
-=== Address Lookup field for ACF ===
+=== JK Address Lookup field for ACF ===
 Contributors: justinkruit
 Tags: Advanced Custom Fields, ACF, Address, Geocoding, Nominatim
 Requires at least: 6.0

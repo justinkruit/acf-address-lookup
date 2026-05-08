@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Address Lookup field for ACF
+ * JK Address Lookup field for ACF
  *
- * Plugin Name:       Address Lookup field for ACF
+ * Plugin Name:       JK Address Lookup field for ACF
  * Plugin URI:        https://github.com/justinkruit/acf-address-lookup
  * Description:       ACF field integration for address lookup providers.
  * Version:           1.0.0
@@ -11,7 +11,7 @@
  * Author URI:        https://justinkruit.com
  * License:           GPLv2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
- * Text Domain:       address-lookup-for-acf
+ * Text Domain:       jk-address-lookup-for-acf
  * Domain Path:       /languages
  */
 
@@ -24,11 +24,11 @@ if (!defined('WPINC')) {
 use justinkruit\AddressLookupForAcf\Providers\ProviderRegistry;
 use justinkruit\AddressLookupForAcf\Providers\NominatimProvider;
 
-class Address_Lookup_For_Acf {
+class JK_Address_Lookup_For_Acf {
 
-  public $plugin_name = 'address-lookup-for-acf';
-  public $version = '0.0.1-beta1';
-  public $prefix = 'address_lookup_for_acf'; // Being used for options and enqueues
+  public $plugin_name = 'jk-address-lookup-for-acf';
+  public $version = '1.0.0';
+  public $prefix = 'jk_address_lookup_for_acf'; // Being used for options and enqueues
   public $plugin_path;
   protected $instances = [];
   private $providerRegistry;
@@ -42,9 +42,9 @@ class Address_Lookup_For_Acf {
 
   public function initialize() {
     $this->plugin_path = plugin_dir_path(__FILE__);
-    $this->define('ADDRESS_LOOKUP_FOR_ACF_VERSION', $this->version);
-    $this->define('ADDRESS_LOOKUP_FOR_ACF_PLUGIN_DIR', $this->plugin_path);
-    $this->define('ADDRESS_LOOKUP_FOR_ACF_PLUGIN_URL', plugin_dir_url(__FILE__));
+    $this->define('JK_ADDRESS_LOOKUP_FOR_ACF_VERSION', $this->version);
+    $this->define('JK_ADDRESS_LOOKUP_FOR_ACF_PLUGIN_DIR', $this->plugin_path);
+    $this->define('JK_ADDRESS_LOOKUP_FOR_ACF_PLUGIN_URL', plugin_dir_url(__FILE__));
 
     spl_autoload_register(array($this, 'autoloader'));
 
@@ -118,7 +118,7 @@ class Address_Lookup_For_Acf {
 
 function run_address_lookup_for_acf() {
   global $address_lookup_for_acf;
-  $address_lookup_for_acf = new Address_Lookup_For_Acf();
+  $address_lookup_for_acf = new JK_Address_Lookup_For_Acf();
   $address_lookup_for_acf->initialize();
 
   return $address_lookup_for_acf;
@@ -128,7 +128,7 @@ run_address_lookup_for_acf();
 //add_action('init', 'run_address_lookup_for_acf');
 
 /**
- * @return Address_Lookup_For_Acf
+ * @return JK_Address_Lookup_For_Acf
  */
 function address_lookup_for_acf() {
   global $address_lookup_for_acf;

@@ -9,7 +9,7 @@ class Utils {
    * @return string The directory of the plugin.
    */
   public static function pluginDir() {
-    return ADDRESS_LOOKUP_FOR_ACF_PLUGIN_DIR;
+    return JK_ADDRESS_LOOKUP_FOR_ACF_PLUGIN_DIR;
   }
 
   /**
@@ -18,7 +18,7 @@ class Utils {
    * @return string The URL of the plugin.
    */
   public static function pluginUrl() {
-    return ADDRESS_LOOKUP_FOR_ACF_PLUGIN_URL;
+    return JK_ADDRESS_LOOKUP_FOR_ACF_PLUGIN_URL;
   }
 
   /**
@@ -27,6 +27,6 @@ class Utils {
    * @return string The version of the plugin.
    */
   public static function pluginVersion() {
-    return ADDRESS_LOOKUP_FOR_ACF_VERSION;
+    return JK_ADDRESS_LOOKUP_FOR_ACF_VERSION;
   }
 }
