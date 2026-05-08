@@ -38,7 +38,7 @@ class acf_field_address_lookup extends \acf_field {
 		);
 
 		$this->env = array(
-			'url'     => site_url(str_replace(ABSPATH, '', __DIR__)), // URL to the acf-FIELD-NAME directory.
+			'url'     => plugin_dir_url(__FILE__),
 			'version' => Utils::pluginVersion()
 		);
 
