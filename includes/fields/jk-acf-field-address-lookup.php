@@ -11,9 +11,9 @@ if (! defined('ABSPATH')) {
 }
 
 /**
- * acf_field_address_lookup class.
+ * jk_acf_field_address_lookup class.
  */
-class acf_field_address_lookup extends \acf_field {
+class jk_acf_field_address_lookup extends \acf_field {
 	public $show_in_rest = true;
 	private $env;
 
@@ -204,7 +204,7 @@ class acf_field_address_lookup extends \acf_field {
 
 		$provider = address_lookup_for_acf()->providers()->get($field['provider'] ?? 'nominatim');
 		$search_sanitized = sanitize_text_field($options['s']);
-		
+
 		if (empty($search_sanitized)) {
 			return false;
 		}

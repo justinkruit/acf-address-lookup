@@ -27,8 +27,8 @@ class NominatimProvider extends AbstractProvider {
       $url_vars['accept-language'] = $field['language'];
     }
 
-    $base_url = apply_filters('address_lookup_for_acf/nominatim_url', 'https://nominatim.openstreetmap.org/search', $field);
-    $url_vars = apply_filters('address_lookup_for_acf/nominatim_url_vars', $url_vars, $field);
+    $base_url = apply_filters('jk_address_lookup_for_acf/nominatim_url', 'https://nominatim.openstreetmap.org/search', $field);
+    $url_vars = apply_filters('jk_address_lookup_for_acf/nominatim_url_vars', $url_vars, $field);
 
     $response = wp_remote_get($base_url . '?' . http_build_query($url_vars));
 

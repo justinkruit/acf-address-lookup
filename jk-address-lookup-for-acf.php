@@ -51,7 +51,7 @@ class JK_Address_Lookup_For_Acf {
     $this->providerRegistry = new ProviderRegistry();
     $this->providerRegistry->register(new NominatimProvider());
 
-    do_action('address_lookup_for_acf/register_providers', $this->providerRegistry);
+    do_action('jk_address_lookup_for_acf/register_providers', $this->providerRegistry);
 
     add_action('init', [$this, 'loadField']);
     add_action('init', [$this, 'registerAcfVariations']);
@@ -62,8 +62,8 @@ class JK_Address_Lookup_For_Acf {
       return;
     }
 
-    require_once plugin_dir_path(__FILE__) . 'includes/fields/acf-field-address-lookup.php';
-    acf_register_field_type('acf_field_address_lookup');
+    require_once plugin_dir_path(__FILE__) . 'includes/fields/jk-acf-field-address-lookup.php';
+    acf_register_field_type('jk_acf_field_address_lookup');
   }
 
   public function autoloader($class) {
@@ -111,27 +111,27 @@ class JK_Address_Lookup_For_Acf {
   }
 
   public function registerAcfVariations() {
-    acf_add_filter_variations('address_lookup_for_acf/nominatim_url', array( 'type', 'name', 'key' ), 1);
-    acf_add_filter_variations('address_lookup_for_acf/nominatim_url_vars', array( 'type', 'name', 'key' ), 1);
+    acf_add_filter_variations('jk_address_lookup_for_acf/nominatim_url', array( 'type', 'name', 'key' ), 1);
+    acf_add_filter_variations('jk_address_lookup_for_acf/nominatim_url_vars', array( 'type', 'name', 'key' ), 1);
   }
 }
 
-function run_address_lookup_for_acf() {
-  global $address_lookup_for_acf;
-  $address_lookup_for_acf = new JK_Address_Lookup_For_Acf();
-  $address_lookup_for_acf->initialize();
+function run_jk_address_lookup_for_acf() {
+  global $jk_address_lookup_for_acf;
+  $jk_address_lookup_for_acf = new JK_Address_Lookup_For_Acf();
+  $jk_address_lookup_for_acf->initialize();
 
-  return $address_lookup_for_acf;
+  return $jk_address_lookup_for_acf;
 }
 
-run_address_lookup_for_acf();
-//add_action('init', 'run_address_lookup_for_acf');
+run_jk_address_lookup_for_acf();
+//add_action('init', 'run_jk_address_lookup_for_acf');
 
 /**
  * @return JK_Address_Lookup_For_Acf
  */
-function address_lookup_for_acf() {
-  global $address_lookup_for_acf;
+function jk_address_lookup_for_acf() {
+  global $jk_address_lookup_for_acf;
 
-  return $address_lookup_for_acf;
+  return $jk_address_lookup_for_acf;
 }

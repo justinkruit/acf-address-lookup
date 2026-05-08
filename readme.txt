@@ -52,9 +52,9 @@ The returned array has the following structure:
 
 = Custom providers =
 
-You can register a custom address lookup provider by hooking into the `address_lookup_for_acf/register_providers` action:
+You can register a custom address lookup provider by hooking into the `jk_address_lookup_for_acf/register_providers` action:
 
-    add_action('address_lookup_for_acf/register_providers', function ($registry) {
+    add_action('jk_address_lookup_for_acf/register_providers', function ($registry) {
         $registry->register(new MyCustomProvider());
     });
 
@@ -62,8 +62,8 @@ Your provider must extend `justinkruit\AddressLookupForAcf\Providers\AbstractPro
 
 = Filters =
 
-* `address_lookup_for_acf/nominatim_url` — Override the Nominatim API base URL (e.g. to use a self-hosted instance).
-* `address_lookup_for_acf/nominatim_url_vars` — Modify the query parameters sent to the Nominatim API.
+* `jk_address_lookup_for_acf/nominatim_url` — Override the Nominatim API base URL (e.g. to use a self-hosted instance).
+* `jk_address_lookup_for_acf/nominatim_url_vars` — Modify the query parameters sent to the Nominatim API.
 
 Both filters also support ACF's field-specific variations by type, name, and key.
 
@@ -81,9 +81,9 @@ No. It works with both the free and PRO versions of Advanced Custom Fields.
 
 = Can I use a self-hosted Nominatim instance? =
 
-Yes. Use the `address_lookup_for_acf/nominatim_url` filter to point to your own instance:
+Yes. Use the `jk_address_lookup_for_acf/nominatim_url` filter to point to your own instance:
 
-    add_filter('address_lookup_for_acf/nominatim_url', function () {
+    add_filter('jk_address_lookup_for_acf/nominatim_url', function () {
         return 'https://nominatim.example.com/search';
     });
 
@@ -103,7 +103,7 @@ Service: [Nominatim](https://nominatim.openstreetmap.org/) by the OpenStreetMap 
 
 Additional data sent: configured country code(s) and language preference (if set in the field settings).
 
-Override URL: use the `address_lookup_for_acf/nominatim_url` filter to point to a self-hosted instance.
+Override URL: use the `jk_address_lookup_for_acf/nominatim_url` filter to point to a self-hosted instance.
 
 Policies:
 
