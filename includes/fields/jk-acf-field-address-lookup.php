@@ -202,7 +202,7 @@ class jk_acf_field_address_lookup extends \acf_field {
 		}
 
 
-		$provider = address_lookup_for_acf()->providers()->get($field['provider'] ?? 'nominatim');
+		$provider = jk_address_lookup_for_acf()->providers()->get($field['provider'] ?? 'nominatim');
 		$search_sanitized = sanitize_text_field($options['s']);
 
 		if (empty($search_sanitized)) {
