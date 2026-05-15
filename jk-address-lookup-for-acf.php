@@ -23,6 +23,7 @@ if (!defined('WPINC')) {
 
 use justinkruit\AddressLookupForAcf\Providers\ProviderRegistry;
 use justinkruit\AddressLookupForAcf\Providers\NominatimProvider;
+use justinkruit\AddressLookupForAcf\Providers\PhotonProvider;
 
 class JK_Address_Lookup_For_Acf {
 
@@ -50,6 +51,7 @@ class JK_Address_Lookup_For_Acf {
 
     $this->providerRegistry = new ProviderRegistry();
     $this->providerRegistry->register(new NominatimProvider());
+    $this->providerRegistry->register(new PhotonProvider());
 
     do_action('jk_address_lookup_for_acf/register_providers', $this->providerRegistry);
 

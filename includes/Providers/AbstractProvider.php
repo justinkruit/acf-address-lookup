@@ -43,4 +43,29 @@ abstract class AbstractProvider {
       'text' => $normalized['display_name'],
     ];
   }
+
+  /**
+   * Build a query string that keeps array values as repeated keys.
+   *
+   * Example: ['countrycode' => ['us', 'ca']] => countrycode=us&countrycode=ca
+   *
+   * @param array $url_vars Query vars.
+   * @return string
+   */
+  protected function buildQueryString(array $url_vars): string {
+    $parts = [];
+
+    foreach ($url_vars as $key => $value) {
+      if (is_array($value)) {
+        foreach ($value as $item) {
+          $parts[] = rawurlencode((string) $key) . '=' . rawurlencode((string) $item);
+        }
+        continue;
+      }
+
+      $parts[] = rawurlencode((string) $key) . '=' . rawurlencode((string) $value);
+    }
+
+    return implode('&', $parts);
+  }
 }
