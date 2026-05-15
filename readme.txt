@@ -43,7 +43,7 @@ The returned array has the following structure:
         'display_name'  => 'Example Street 1, City, Country',
         'coordinates'   => ['lat' => '52.370216', 'lon' => '4.895168'],
         'house_number'  => '1',
-        'road'          => 'Example Street',
+        'street'        => 'Example Street',
         'city'          => 'City',
         'state'         => 'State',
         'postcode'      => '1234 AB',

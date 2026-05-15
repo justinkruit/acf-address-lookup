@@ -68,7 +68,7 @@ class PhotonProvider extends AbstractProvider {
           'lon' => $geometry['coordinates'][0],
         ],
         'house_number' => $properties['housenumber'] ?? '',
-        'road'         => $properties['street'] ?? '',
+        'street'       => $properties['street'] ?? '',
         'city'         => $properties['city'] ?? $properties['town'] ?? $properties['village'] ?? '',
         'state'        => $properties['state'] ?? '',
         'postcode'     => $properties['postcode'] ?? '',
