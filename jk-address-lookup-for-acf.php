@@ -115,6 +115,8 @@ class JK_Address_Lookup_For_Acf {
   public function registerAcfVariations() {
     acf_add_filter_variations('jk_address_lookup_for_acf/nominatim_url', array( 'type', 'name', 'key' ), 1);
     acf_add_filter_variations('jk_address_lookup_for_acf/nominatim_url_vars', array( 'type', 'name', 'key' ), 1);
+    acf_add_filter_variations('jk_address_lookup_for_acf/photon_url', array( 'type', 'name', 'key' ), 1);
+    acf_add_filter_variations('jk_address_lookup_for_acf/photon_url_vars', array( 'type', 'name', 'key' ), 1);
   }
 }
 
