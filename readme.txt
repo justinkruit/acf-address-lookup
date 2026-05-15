@@ -1,6 +1,6 @@
 === JK Address Lookup field for ACF ===
 Contributors: justinkruit
-Tags: Advanced Custom Fields, ACF, Address, Geocoding, Nominatim
+Tags: Advanced Custom Fields, ACF, Address, Geocoding, Nominatim, Photon, OpenStreetMap
 Requires at least: 6.0
 Tested up to: 6.9
 Stable tag: 1.0.0
@@ -16,6 +16,8 @@ Address Lookup field for ACF adds an address lookup field type to Advanced Custo
 
 The plugin uses [Nominatim (OpenStreetMap)](https://nominatim.openstreetmap.org/) as the default lookup provider, and supports registering custom providers.
 
+The plugin also includes support for the [Photon](https://photon.komoot.io/) geocoding provider out of the box. You can choose between Nominatim and Photon, or register your own providers.
+
 = Features =
 
 * **Live address search** — AJAX-powered search as you type, using Select2.
@@ -24,6 +26,7 @@ The plugin uses [Nominatim (OpenStreetMap)](https://nominatim.openstreetmap.org/
 * **Language support** — Set the preferred language for results.
 * **Extensible provider system** — Register your own address lookup providers via the `address_lookup_for_acf/register_providers` action.
 * **REST API support** — Field values are exposed in the REST API.
+* **Photon provider** — Use the Photon geocoding service as an alternative to Nominatim.
 
 = Usage =
 
@@ -64,6 +67,8 @@ Your provider must extend `justinkruit\AddressLookupForAcf\Providers\AbstractPro
 
 * `jk_address_lookup_for_acf/nominatim_url` — Override the Nominatim API base URL (e.g. to use a self-hosted instance).
 * `jk_address_lookup_for_acf/nominatim_url_vars` — Modify the query parameters sent to the Nominatim API.
+* `jk_address_lookup_for_acf/photon_url` — Override the Photon API base URL (e.g. to use a self-hosted instance).
+* `jk_address_lookup_for_acf/photon_url_vars` — Modify the query parameters sent to the Photon API.
 
 Both filters also support ACF's field-specific variations by type, name, and key.
 
@@ -110,6 +115,19 @@ Policies:
 * [Nominatim Usage Policy](https://operations.osmfoundation.org/policies/nominatim/)
 * [OpenStreetMap Foundation Terms of Use](https://osmfoundation.org/wiki/Terms_of_Use)
 * [OpenStreetMap Foundation Privacy Policy](https://osmfoundation.org/wiki/Privacy_Policy)
+
+= Photon =
+
+Service: [Photon](https://photon.komoot.io/) by Komoot: used for geocoding address searches, powered by OpenStreetMap data.
+
+Additional data sent: configured country code(s) and language preference (if set in the field settings).
+
+Override URL: use the `jk_address_lookup_for_acf/photon_url` filter to point to a self-hosted instance.
+
+Policies:
+
+* [Photon Terms of Service](https://photon.komoot.io/)
+* [Komoot Privacy Policy](https://www.komoot.com/privacy)
 
 == Changelog ==
 
