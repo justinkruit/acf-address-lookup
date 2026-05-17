@@ -1,6 +1,6 @@
 === Address Lookup field for ACF ===
 Contributors: justinkruit
-Tags: Advanced Custom Fields, ACF, Address, Geocoding, Nominatim, Photon, OpenStreetMap
+Tags: Advanced Custom Fields, ACF, Address, Geocoding
 Requires at least: 6.0
 Tested up to: 7.0
 Stable tag: 1.1.0
