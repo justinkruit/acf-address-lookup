@@ -1,9 +1,9 @@
 <?php
 
 /**
- * JK Address Lookup field for ACF
+ * Address Lookup field for ACF
  *
- * Plugin Name:       JK Address Lookup field for ACF
+ * Plugin Name:       Address Lookup field for ACF
  * Plugin URI:        https://github.com/justinkruit/acf-address-lookup
  * Description:       ACF field integration for address lookup providers.
  * Version:           1.0.0
