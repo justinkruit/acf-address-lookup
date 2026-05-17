@@ -60,16 +60,16 @@ class jk_acf_field_address_lookup extends \acf_field {
 	 */
 	public function render_field_settings($field) {
 		// Disabled for now: want to add more providers before exposing this option.
-		// acf_render_field_setting(
-		// 	$field,
-		// 	array(
-		// 		'label'			=> __('Lookup Provider', 'jk-address-lookup-for-acf'),
-		// 		'instructions'	=> __('Select the address lookup API to use.', 'jk-address-lookup-for-acf'),
-		// 		'type'			=> 'select',
-		// 		'name'			=> 'provider',
-		// 		'choices'		=> address_lookup_for_acf()->providers()->all(),
-		// 	)
-		// );
+		acf_render_field_setting(
+			$field,
+			array(
+				'label'			=> __('Lookup Provider', 'jk-address-lookup-for-acf'),
+				'instructions'	=> __('Select the address lookup API to use.', 'jk-address-lookup-for-acf'),
+				'type'			=> 'select',
+				'name'			=> 'provider',
+				'choices'		=> jk_address_lookup_for_acf()->providers()->all(),
+			)
+		);
 
 		acf_render_field_setting(
 			$field,
@@ -78,11 +78,22 @@ class jk_acf_field_address_lookup extends \acf_field {
 				'instructions'	=> __('Limit search results to specific country codes (comma-separated)', 'jk-address-lookup-for-acf'),
 				'type'			=> 'text',
 				'name'			=> 'country_codes',
-				'conditions'   => array(
-					'field'    => 'provider',
-					'operator' => '==',
-					'value'    => 'nominatim',
-				),
+				'conditions'   => [
+					[
+						array(
+							'field'    => 'provider',
+							'operator' => '==',
+							'value'    => 'nominatim',
+						),
+					],
+					[
+						array(
+							'field'    => 'provider',
+							'operator' => '==',
+							'value'    => 'photon',
+						),
+					]
+				]
 			)
 		);
 
@@ -93,11 +104,22 @@ class jk_acf_field_address_lookup extends \acf_field {
 				'instructions'	=> __('Set the language for the address lookup results.', 'jk-address-lookup-for-acf'),
 				'type'			=> 'text',
 				'name'			=> 'language',
-				'conditions'   => array(
-					'field'    => 'provider',
-					'operator' => '==',
-					'value'    => 'nominatim',
-				),
+				'conditions'   => [
+					[
+						array(
+							'field'    => 'provider',
+							'operator' => '==',
+							'value'    => 'nominatim',
+						),
+					],
+					[
+						array(
+							'field'    => 'provider',
+							'operator' => '==',
+							'value'    => 'photon',
+						),
+					]
+				]
 			)
 		);
 	}

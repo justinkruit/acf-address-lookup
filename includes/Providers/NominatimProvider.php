@@ -53,7 +53,7 @@ class NominatimProvider extends AbstractProvider {
           'lon' => $item['lon'],
         ],
         'house_number' => $item['address']['house_number'] ?? '',
-        'road'         => $item['address']['road'] ?? '',
+        'street'       => $item['address']['road'] ?? '',
         'city'         => $item['address']['city'] ?? $item['address']['town'] ?? $item['address']['village'] ?? '',
         'state'        => $item['address']['state'] ?? '',
         'postcode'     => $item['address']['postcode'] ?? '',
