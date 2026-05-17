@@ -3,7 +3,7 @@ Contributors: justinkruit
 Tags: Advanced Custom Fields, ACF, Address, Geocoding, Nominatim, Photon, OpenStreetMap
 Requires at least: 6.0
 Tested up to: 7.0
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
@@ -130,6 +130,9 @@ Policies:
 * [Komoot Privacy Policy](https://www.komoot.com/privacy)
 
 == Changelog ==
+
+= 1.1.0 =
+* Added support for the Photon geocoding provider.
 
 = 1.0.0 =
 * Initial release.

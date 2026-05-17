@@ -6,7 +6,7 @@
  * Plugin Name:       Address Lookup field for ACF
  * Plugin URI:        https://github.com/justinkruit/acf-address-lookup
  * Description:       ACF field integration for address lookup providers.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Author:            Justin Kruit
  * Author URI:        https://justinkruit.com
  * License:           GPLv2 or later
@@ -28,7 +28,7 @@ use justinkruit\AddressLookupForAcf\Providers\PhotonProvider;
 class JK_Address_Lookup_For_Acf {
 
   public $plugin_name = 'jk-address-lookup-for-acf';
-  public $version = '1.0.0';
+  public $version = '1.1.0';
   public $prefix = 'jk_address_lookup_for_acf'; // Being used for options and enqueues
   public $plugin_path;
   protected $instances = [];
