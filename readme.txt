@@ -3,7 +3,7 @@ Contributors: justinkruit
 Tags: Advanced Custom Fields, ACF, Address, Geocoding
 Requires at least: 6.0
 Tested up to: 7.2
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
@@ -130,6 +130,10 @@ Policies:
 * [Komoot Privacy Policy](https://www.komoot.com/privacy)
 
 == Changelog ==
+
+= 1.1.1 =
+* Tested up to WordPress 7.2.
+* Fixed PHP warnings for invalid saved values and empty Photon responses.
 
 = 1.1.0 =
 * Added support for the Photon geocoding provider.
