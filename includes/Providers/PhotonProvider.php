@@ -50,7 +50,7 @@ class PhotonProvider extends AbstractProvider {
 
     $results = [];
 
-    foreach ($data['features'] as $item) {
+    foreach ($data['features'] ?? [] as $item) {
       $properties = $item['properties'];
       $geometry = $item['geometry'];
       $name = [

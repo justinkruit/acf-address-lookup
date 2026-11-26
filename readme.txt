@@ -2,7 +2,7 @@
 Contributors: justinkruit
 Tags: Advanced Custom Fields, ACF, Address, Geocoding
 Requires at least: 6.0
-Tested up to: 7.0
+Tested up to: 7.2
 Stable tag: 1.1.0
 Requires PHP: 7.2
 License: GPLv2 or later

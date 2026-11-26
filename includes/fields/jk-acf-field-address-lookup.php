@@ -139,7 +139,7 @@ class jk_acf_field_address_lookup extends \acf_field {
 			if (! empty($value)) {
 				foreach ($value as $val) {
 					$val_decoded = json_decode($val, true);
-					$minimal[$val] = $val_decoded['display_name'] ?: $val;
+					$minimal[$val] = $val_decoded['display_name'] ?? $val;
 				}
 			}
 			$choices = $minimal;
